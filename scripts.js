@@ -64,7 +64,6 @@ async function fetchData(companyName) {
     outputMessage('Villa við að sækja gögn');
   } else {
     const data = await result.json();
-    console.log(data);
     return data;
   }
 }
@@ -143,25 +142,20 @@ function outputResult(data) {
 function search(e) {
   e.preventDefault();
 
-  let data = null;
+  const searchText = document.querySelector('input').value;
 
-  // search if string pushed
-  console.log('e ', e);
-  if (e !== '') {
-    const searchText = document.querySelector('input').value;
-    data = fetchData(searchText);
-  } else {
+  if (searchText == null || searchText === '') {
     outputMessage('Lén verður að vera strengur');
-    return;
+  } else {
+    fetchData(searchText).then((data) => {
+      if (data.results.length === 0) {
+        outputMessage('Ekkert fyrirtæki fannst fyrir leitarstreng');
+      } else {
+        console.log('data found', data);
+        outputResult(data);
+      }
+    });
   }
-
-  // verify data found
-  if (data.results.length === 0) {
-    outputMessage('Ekkert fyrirtæki fannst fyrir leitarstreng');
-    return;
-  }
-
-  return data;
 }
 
 /**
@@ -169,11 +163,7 @@ function search(e) {
  */
 const program = (() => {
   function init(companies) {
-    // const data = fetchData(companies);
-
-    fetchData(companies).then((data) => {
-      outputResult(data);
-    });
+    outputResult(companies);
   }
 
   return {
@@ -183,7 +173,5 @@ const program = (() => {
 
 document.addEventListener('DOMContentLoaded', () => {
   const companies = document.querySelector('form').addEventListener('submit', search);
-
-  // const companies = 'elko';
   program.init(companies);
 });
