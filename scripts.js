@@ -2,6 +2,7 @@
 
 const API_URL = 'https://apis.is/company?name=';
 
+// helper function to create DOM elements
 function el(type, text, className, className2) {
   let element = document.createElement(type);
 
@@ -54,7 +55,7 @@ function outputMessage(message) {
 // search and return data from apis.is if found
 async function fetchData(companyName) {
   const url = API_URL + companyName;
-
+  let data = null;
   outputSearchingMessage();
 
   const result = await fetch(url);
@@ -63,9 +64,10 @@ async function fetchData(companyName) {
     console.error('Non 200 status');
     outputMessage('Villa við að sækja gögn');
   } else {
-    const data = await result.json();
-    return data;
+    data = await result.json();
   }
+
+  return data;
 }
 
 // output json data to page
@@ -150,9 +152,12 @@ function search(e) {
     fetchData(searchText).then((data) => {
       if (data.results.length === 0) {
         outputMessage('Ekkert fyrirtæki fannst fyrir leitarstreng');
-      } else {
+      } else if (data !== null) {
         console.log('data found', data);
         outputResult(data);
+      } else {
+        console.log('no data found');
+        outputMessage('Villa við að sækja gögn');
       }
     });
   }
