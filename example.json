@@ -1,0 +1,16 @@
+{ 
+  "results":[ 
+     { 
+        "name":"Elko ehf",
+        "sn":"4801850219",
+        "active":0,
+        "address":""
+     },
+     { 
+        "name":"Elko ehf.",
+        "sn":"5610003280",
+        "active":1,
+        "address":"Skarfagörðum 2, 104 Reykjavík"
+     }
+  ]
+}
