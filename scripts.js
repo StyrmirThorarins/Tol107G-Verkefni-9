@@ -172,6 +172,5 @@ const program = (() => {
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
-  const companies = document.querySelector('form').addEventListener('submit', search);
-  program.init(companies);
+  document.querySelector('form').addEventListener('submit', search);
 });
